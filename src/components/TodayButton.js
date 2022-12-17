@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const TodayButton = styled.button`
+        cursor: pointer;
         width: 91px;
         height: 91px;
         background: #52B6FF;

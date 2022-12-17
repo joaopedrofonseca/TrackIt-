@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Header = styled.div`
+    z-index: 1000;
     position: fixed;
     background-color: #126BA5;
     width: 375px;

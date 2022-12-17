@@ -21,6 +21,7 @@ export const NewHabit = styled.div`
     border-radius: 5px;
     box-sizing: border-box;
     padding: 18px;
+    position: relative;
     input{
         width: 303px;
         height: 45px;
@@ -43,11 +44,12 @@ export const NewHabit = styled.div`
     }
     }
     div{
-        margin-top: 29px;
-        display: flex;
-        justify-content: end;
+        position: absolute;
     }
     .cancel{
+        position: absolute;
+        top: 137px;
+        right: 123px;
         cursor: pointer;
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -59,6 +61,9 @@ export const NewHabit = styled.div`
         background-color: #FFFFFF;
     }
     .save{
+        position: absolute;
+        top: 130px;
+        right: 16px;
         cursor: pointer;
         width: 84px;
         height: 35px;

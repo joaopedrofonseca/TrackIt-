@@ -6,14 +6,19 @@ import { TitleToday, CheckHabit } from "./styled"
 import check from "../../assets/check.png"
 import "react-circular-progressbar/dist/styles.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import AppContext from "../../AppContext/Context"
 import axios from "axios"
 import URL from "../../constants/BASE_URL"
 import React from 'react';
 import { Link } from "react-router-dom"
+import dayjs from 'dayjs';
 
 export default function Today() {
+    const [today, setToday] = useState([])
+    let now = dayjs();
+    console.log(now.format());
+
     const { image, token } = useContext(AppContext)
     const config = {
         headers: {

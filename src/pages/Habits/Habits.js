@@ -14,12 +14,14 @@ import AppContext from "../../AppContext/Context";
 import axios from "axios";
 import URL from "../../constants/BASE_URL";
 import WeekdayBtn from "../../components/WeekdayBtn";
+import SavedBtn from "../../components/SavedWeekdayBtn";
+import AlignWeekdays from "../../components/AlignWeekdays";
 
-export default function Habits() {
-    const [createdHabits, setCreatedHabits] = useState([])
+export default function Habits({ createdHabits, setCreatedHabits }) {
     const [add, setAdd] = useState(false)
     const [habitName, setHabitName] = useState('')
     const [selectedDays, setSelectedDays] = useState([])
+    const [render, setRender] = useState([])
     const [isDisabled, setIsDisabled] = useState(false)
     const { image, token } = useContext(AppContext)
     const config = {
@@ -30,7 +32,9 @@ export default function Habits() {
 
     useEffect(() => {
         axios.get(`${URL}/habits`, config)
-            .then(r => setCreatedHabits(r.data))
+            .then(r => {
+                setCreatedHabits(r.data)
+            })
             .catch(e => console.log(e.response.data))
     }, [createdHabits])
 
@@ -41,6 +45,8 @@ export default function Habits() {
             days: selectedDays
         }
         axios.post(`${URL}/habits`, body, config)
+            .then(r => { console.log(r, "deu certo") })
+            .catch(er => er.response.data)
     }
 
     function removeHabit(id) {
@@ -49,7 +55,6 @@ export default function Habits() {
             axios.delete(`${URL}/habits/${id}`, config)
         }
     }
-
 
     return (
         <PhoneScreen color="#E5E5E5">
@@ -68,12 +73,13 @@ export default function Habits() {
                 {add &&
                     <NewHabit>
                         <form onSubmit={addHabit}>
-                            <input type="text" placeholder="nome do hábito" value={habitName} onChange={e => setHabitName(e.target.value)} required disabled={isDisabled}></input>
-                            <div>
-                                <button className="cancel" onClick={() => { setAdd(false) }}>Cancelar</button>
-                                <button className="save" type="submit" onClick={() => { setAdd(false) }}>Salvar</button>
-                            </div>
+                            <input placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)}></input>
+                            <button className="save" type="submit">Salvar</button>
                         </form>
+                        <div>
+                            {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} />)}
+                        </div>
+                        <button className="cancel">Cancelar</button>
                     </NewHabit>}
                 {createdHabits.map(h => (
                     <SavedHabit>
@@ -81,7 +87,9 @@ export default function Habits() {
                             <h1>{h.name}</h1>
                             <img onClick={() => removeHabit(h.id)} src={trash} />
                         </div>
-                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} />)}
+                        <AlignWeekdays>
+                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn key={d.id} grey={true} disabled>{d.key}</SavedBtn>: <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
+                        </AlignWeekdays>
                     </SavedHabit>
                 ))}
                 {createdHabits.length === 0 && <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
@@ -110,3 +118,30 @@ export default function Habits() {
 
     )
 }
+
+
+/*<form onSubmit={addHabit}>
+                            <input type="text" placeholder="nome do hábito" value={habitName} onChange={e => setHabitName(e.target.value)} required disabled={isDisabled}></input>
+                            {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays}/>)}
+                            <div>
+                                <button className="cancel" onClick={() => { setAdd(false) }}>Cancelar</button>
+                                <button className="save" type="submit" onClick={() => { setAdd(false) }}>Salvar</button>
+                            </div>
+                        </form>
+                        
+                        
+                        
+                                axios.post(`${URL}/habits`, body, config)
+            .then(r => {
+                setRender([...createdHabits])
+                console.log(r.data)})
+            .catch(er => er.response.data)
+
+
+                                            if (h.days.includes(d.id)) {
+                                    <SavedBtn grey={true}>{d.key}</SavedBtn>
+                                } else {
+                                    <SavedBtn grey={false}>{d.key}</SavedBtn>
+                                }})}
+
+*/
