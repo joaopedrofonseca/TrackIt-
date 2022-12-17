@@ -49,5 +49,9 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    body{
+        font-family: 'Lexend Deca', sans-serif;
+        font-size: 400;
+    }
 `
 export default GlobalStyle;
