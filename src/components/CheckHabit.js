@@ -17,7 +17,7 @@ export default function CheckHabitt({ t, setCheckHabits, checkHabits }) {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    }    
+    }
 
     function doing(t) {
         let cPlus = t.currentSequence + 1
@@ -25,7 +25,7 @@ export default function CheckHabitt({ t, setCheckHabits, checkHabits }) {
             setIsClicked(true)
             setDone(true)
             setCheckHabits([...checkHabits, t.id])
-            if(cPlus >= record){
+            if (cPlus >= record) {
                 setRecordColor(true)
                 setRecord(cPlus)
             }
@@ -37,9 +37,9 @@ export default function CheckHabitt({ t, setCheckHabits, checkHabits }) {
             setDone(false)
             setRecord(t.highestSequence - 1)
             setRecordColor(false)
-            if (isClicked){
-                setCurrent(t.currentSequence -1)
-            } else if(!isClicked){
+            if (isClicked) {
+                setCurrent(t.currentSequence - 1)
+            } else if (!isClicked) {
                 setCurrent(t.currentSequence - 1)
             }
             const filtered = checkHabits.filter((h) => h.id === t.id)
@@ -51,21 +51,22 @@ export default function CheckHabitt({ t, setCheckHabits, checkHabits }) {
         }
     }
 
-    useEffect(()=> {
-        if (t.done === true){
+    useEffect(() => {
+        if (t.done === true) {
             setCheckHabits([...checkHabits, t.id])
         }
     }, [])
 
     return (
         <CheckHabit
+            data-test="today-habit-container"
             done={done}
             record={recordColor}
             onClick={() => doing(t)}>
-            <h1>{t.name}</h1>
-            <p className>Sequência atual: <span className="current">{current} dias</span></p>
-            <p>Seu recorde: <span className="record">{record} dias</span></p>
-            <div>
+            <h1 data-test="today-habit-name">{t.name}</h1>
+            <p data-test="today-habit-sequence">Sequência atual: <span className="current">{current} dias</span></p>
+            <p data-test="today-habit-record">Seu recorde: <span className="record">{record} dias</span></p>
+            <div data-test="today-habit-check-btn">
                 <img src={check} />
             </div>
         </CheckHabit>

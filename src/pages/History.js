@@ -11,20 +11,20 @@ import { useContext } from "react";
 import AppContext from "../AppContext/Context";
 
 export default function History() {
-    const {today, checkHabits, image} = useContext(AppContext)
+    const { today, checkHabits, image } = useContext(AppContext)
     const menuBar = checkHabits.length / today.length
-    
+
     return (
         <PhoneScreen color="#E5E5E5" align="start">
-            <Header>
+            <Header data-test="header">
                 <h1>TrackIt</h1>
-                <img src={image}/>
+                <img src={image} />
             </Header>
             <TitleHabit margin="100px">
                 <h1>Histórico</h1>
             </TitleHabit>
             <Phrase>Em breve você poderá ver o histórico dos seus hábitos aqui!</Phrase>
-            <Link to="/hoje">
+            <Link to="/hoje" data-test="today">
                 <TodayButton left={true}>
                     <CircularProgressbar value={menuBar * 100} text='Hoje'
                         styles={buildStyles({
@@ -35,11 +35,11 @@ export default function History() {
 
                 </TodayButton>
             </Link>
-            <Menu>
-                <Link to="/habitos" style={{ textDecoration: 'none' }}>
+            <Menu data-test="menu">
+                <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
                     <h1>Hábitos</h1>
                 </Link>
-                <Link to="/historico" style={{ textDecoration: 'none' }}>
+                <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                     <h1>Histórico</h1>
                 </Link>
             </Menu>

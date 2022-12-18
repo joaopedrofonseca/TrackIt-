@@ -38,16 +38,16 @@ export default function Today() {
     return (
         <>
             <PhoneScreen color="#E5E5E5" align="start">
-                <Header>
+                <Header data-test="header">
                     <h1>TrackIt</h1>
                     <img src={image} />
                 </Header>
-                <TitleToday>
-                    <h1>{days[weekday]}, {day}/{month}</h1>
-                    {checkHabits.length === 0 ? <p>Nenhum hábito concluído ainda</p> : <p>{menuBar*100}% dos hábitos concluídos</p>}
+                <TitleToday checkHabits={checkHabits}>
+                    <h1 data-test="today">{days[weekday]}, {day}/{month}</h1>
+                    {checkHabits.length === 0 ? <p data-test="today-counter">Nenhum hábito concluído ainda</p> : <p data-test="today-counter">{menuBar * 100}% dos hábitos concluídos</p>}
                 </TitleToday>
-                {today.map(t => ( <CheckHabitt key={t.name} t={t} setToday={setToday} setCheckHabits={setCheckHabits} checkHabits={checkHabits}/>))}
-                <Link to="/hoje">
+                {today.map(t => (<CheckHabitt key={t.name} t={t} setToday={setToday} setCheckHabits={setCheckHabits} checkHabits={checkHabits} />))}
+                <Link to="/hoje" data-test="today">
                     <TodayButton left={true}>
                         <CircularProgressbar value={menuBar * 100} text='Hoje'
                             styles={buildStyles({
@@ -58,11 +58,11 @@ export default function Today() {
 
                     </TodayButton>
                 </Link>
-                <Menu>
-                    <Link to="/habitos" style={{ textDecoration: 'none' }}>
+                <Menu data-test="menu">
+                    <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
                         <h1>Hábitos</h1>
                     </Link>
-                    <Link to="/historico" style={{ textDecoration: 'none' }}>
+                    <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                         <h1>Histórico</h1>
                     </Link>
                 </Menu>

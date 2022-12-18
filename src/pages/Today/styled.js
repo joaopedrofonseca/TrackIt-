@@ -13,6 +13,7 @@ export const TitleToday = styled.div`
         color: #126BA5;
     }
     p{
+        color: ${props => props.checkHabits.length !== 0 && '#8FC549'};
         font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;

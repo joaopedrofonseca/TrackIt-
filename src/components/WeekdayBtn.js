@@ -5,6 +5,7 @@ export default function WeekdayBtn({ d, setSelectedDays, selectedDays }) {
     const [clicked, setClicked] = useState(false)
     return (
         <Button
+            data-test="habit-day"
             onClick={() => {
                 setClicked(true)
                 setSelectedDays([...selectedDays, d.id])

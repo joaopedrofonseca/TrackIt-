@@ -43,13 +43,13 @@ export default function SignUp({loading, setLoading}) {
             </Logo>
             <AlignInputs loading={loading}>
                 <form onSubmit={signUp}>
-                    <input placeholder="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required></input>
-                    <input placeholder="senha" type="password" value={password} onChange={e => setPassword(e.target.value)} required></input>
-                    <input placeholder="nome" type="text" value={name} onChange={e => setName(e.target.value)} required></input>
-                    <input placeholder="foto" type="text" value={image} onChange={e => setImage(e.target.value)} required></input>
-                    <button type="submit">{loading? <ThreeDots color="white" height='13px' width='51px'></ThreeDots> :'Cadastrar' }</button>
+                    <input data-test="email-input" placeholder="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required></input>
+                    <input data-test="password-input" placeholder="senha" type="password" value={password} onChange={e => setPassword(e.target.value)} required></input>
+                    <input data-test="user-name-input" placeholder="nome" type="text" value={name} onChange={e => setName(e.target.value)} required></input>
+                    <input data-test="user-image-input" placeholder="foto" type="text" value={image} onChange={e => setImage(e.target.value)} required></input>
+                    <button data-test="signup-btn" type="submit">{loading? <ThreeDots color="white" height='13px' width='51px'></ThreeDots> :'Cadastrar' }</button>
                 </form>
-                <Link to="/">
+                <Link to="/" data-test="login-link">
                     <p>Já tem uma conta? Faça login!</p>
                 </Link>
             </AlignInputs>

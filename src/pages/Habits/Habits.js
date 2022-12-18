@@ -71,51 +71,53 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
 
     return (
         <PhoneScreen color="#E5E5E5">
-            <Header>
+            <Header data-test="header">
                 <h1>TrackIt</h1>
                 <img src={image} />
             </Header>
             <HabitContainer>
                 <TitleHabit margin="0px">
                     <h1>Meus hábitos</h1>
-                    <button onClick={() => {
-                        setAdd(true)
-                    }}>+</button>
+                    <button
+                        data-test="habit-create-btn"
+                        onClick={() => {
+                            setAdd(true)
+                        }}>+</button>
                 </TitleHabit>
-                {add === true && <NewHabit loading={loading}>
+                {add === true && <NewHabit data-test="habit-create-container" loading={loading}>
                     <form onSubmit={addHabit}>
-                        <input placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)} disabled={isDisableH}></input>
-                        <button className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px'></ThreeDots> : 'Salvar'}</button>
+                        <input data-test="habit-name-input" placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)} disabled={isDisableH}></input>
+                        <button data-test="habit-create-save-btn" className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px'></ThreeDots> : 'Salvar'}</button>
                     </form>
                     <div>
                         {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} />)}
                     </div>
-                    <button className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
+                    <button  data-test="habit-create-cancel-btn" className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
 
                 </NewHabit>}
                 {createdHabits.map(h => (
-                    <SavedHabit>
+                    <SavedHabit data-test="habit-container">
                         <div>
-                            <h1>{h.name}</h1>
-                            <img onClick={() => removeHabit(h.id)} src={trash} />
+                            <h1 data-test="habit-name">{h.name}</h1>
+                            <img data-test="habit-delete-btn" onClick={() => removeHabit(h.id)} src={trash} />
                         </div>
                         <AlignWeekdays>
-                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn key={d.id} grey={true} disabled>{d.key}</SavedBtn> : <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
+                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn data-test="habit-day" key={d.id} grey={true} disabled>{d.key}</SavedBtn> : <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
                         </AlignWeekdays>
                     </SavedHabit>
                 ))}
                 {createdHabits.length === 0 && <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 }
             </HabitContainer>
-            <Menu>
-                <Link to="/habitos" style={{ textDecoration: 'none' }}>
+            <Menu data-test="menu">
+                <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
                     <h1>Hábitos</h1>
                 </Link>
-                <Link to="/historico" style={{ textDecoration: 'none' }}>
+                <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                     <h1>Histórico</h1>
                 </Link>
             </Menu>
-            <Link to="/hoje" >
+            <Link to="/hoje" data-test="today">
                 <TodayButton left='42px'>
                     <CircularProgressbar value={menuBar * 100} text='Hoje'
                         styles={buildStyles({
