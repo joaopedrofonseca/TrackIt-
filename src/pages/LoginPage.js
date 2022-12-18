@@ -7,8 +7,10 @@ import { useContext, useState } from "react"
 import axios from "axios"
 import URL from "../constants/BASE_URL"
 import AppContext from "../AppContext/Context"
+import { ThreeDots } from 'react-loader-spinner'
 
-export default function LoginPage() {
+
+export default function LoginPage({ loading, setLoading }) {
     const [loginEmail, setLoginEmail] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
     const { setToken, setName, setImage } = useContext(AppContext)
@@ -20,15 +22,20 @@ export default function LoginPage() {
             email: loginEmail,
             password: loginPassword
         }
+        setLoading(true)
         axios.post(`${URL}/auth/login`, body)
             .then(r => {
+                setLoading(false)
                 setToken(r.data.token)
                 setName(r.data.name)
                 setImage(r.data.image)
                 console.log(r.data)
                 navigate("/hoje")
             })
-            .catch(er => console.log(er.response.data))
+            .catch(er => {
+                alert(er.response.data.message)
+                setLoading(false)
+            })
     }
 
     return (
@@ -36,11 +43,11 @@ export default function LoginPage() {
             <Logo>
                 <img src={logo} />
             </Logo>
-            <AlignInputs>
+            <AlignInputs loading={loading}>
                 <form onSubmit={login}>
                     <input placeholder="email" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} required></input>
                     <input placeholder="senha" type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} required></input>
-                    <button type="submit">Entrar</button>
+                    <button type="submit">{loading ? <ThreeDots color="white" height='13px' width='51px'></ThreeDots> : 'Entrar'}</button>
                 </form>
                 <Link to="/cadastro">
                     <p>Não tem uma conta? Cadastre-se!</p>

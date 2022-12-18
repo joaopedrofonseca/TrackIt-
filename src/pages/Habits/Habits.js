@@ -16,14 +16,15 @@ import URL from "../../constants/BASE_URL";
 import WeekdayBtn from "../../components/WeekdayBtn";
 import SavedBtn from "../../components/SavedWeekdayBtn";
 import AlignWeekdays from "../../components/AlignWeekdays";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function Habits({ createdHabits, setCreatedHabits }) {
+export default function Habits({ createdHabits, setCreatedHabits, loading, setLoading }) {
     const [add, setAdd] = useState(false)
     const [habitName, setHabitName] = useState('')
     const [selectedDays, setSelectedDays] = useState([])
-    const [render, setRender] = useState([])
-    const [isDisabled, setIsDisabled] = useState(false)
-    const { image, token } = useContext(AppContext)
+    const [isDisableH, setIsDisableH] = useState(false)
+    const { image, token, checkHabits, today } = useContext(AppContext)
+    const menuBar = checkHabits.length / today.length
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -40,13 +41,25 @@ export default function Habits({ createdHabits, setCreatedHabits }) {
 
     function addHabit(e) {
         e.preventDefault()
+        setIsDisableH(true)
+        setLoading(true)
         const body = {
             name: habitName,
             days: selectedDays
         }
         axios.post(`${URL}/habits`, body, config)
-            .then(r => { console.log(r, "deu certo") })
-            .catch(er => er.response.data)
+            .then(r => {
+                console.log(r);
+                setIsDisableH(false)
+                setLoading(false)
+                setAdd(false)
+                setHabitName('')
+            })
+            .catch(er => {
+                alert(er.response.data)
+                setIsDisableH(false)
+                setLoading(false)
+            })
     }
 
     function removeHabit(id) {
@@ -67,20 +80,19 @@ export default function Habits({ createdHabits, setCreatedHabits }) {
                     <h1>Meus hábitos</h1>
                     <button onClick={() => {
                         setAdd(true)
-                        setSelectedDays([])
                     }}>+</button>
                 </TitleHabit>
-                {add &&
-                    <NewHabit>
-                        <form onSubmit={addHabit}>
-                            <input placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)}></input>
-                            <button className="save" type="submit">Salvar</button>
-                        </form>
-                        <div>
-                            {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} />)}
-                        </div>
-                        <button className="cancel">Cancelar</button>
-                    </NewHabit>}
+                {add === true && <NewHabit loading={loading}>
+                    <form onSubmit={addHabit}>
+                        <input placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)} disabled={isDisableH}></input>
+                        <button className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px'></ThreeDots> : 'Salvar'}</button>
+                    </form>
+                    <div>
+                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} />)}
+                    </div>
+                    <button className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
+
+                </NewHabit>}
                 {createdHabits.map(h => (
                     <SavedHabit>
                         <div>
@@ -88,7 +100,7 @@ export default function Habits({ createdHabits, setCreatedHabits }) {
                             <img onClick={() => removeHabit(h.id)} src={trash} />
                         </div>
                         <AlignWeekdays>
-                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn key={d.id} grey={true} disabled>{d.key}</SavedBtn>: <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
+                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn key={d.id} grey={true} disabled>{d.key}</SavedBtn> : <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
                         </AlignWeekdays>
                     </SavedHabit>
                 ))}
@@ -105,7 +117,7 @@ export default function Habits({ createdHabits, setCreatedHabits }) {
             </Menu>
             <Link to="/hoje" >
                 <TodayButton left='42px'>
-                    <CircularProgressbar value='66' text='Hoje'
+                    <CircularProgressbar value={menuBar * 100} text='Hoje'
                         styles={buildStyles({
                             textColor: "white",
                             pathColor: "white",
@@ -118,30 +130,3 @@ export default function Habits({ createdHabits, setCreatedHabits }) {
 
     )
 }
-
-
-/*<form onSubmit={addHabit}>
-                            <input type="text" placeholder="nome do hábito" value={habitName} onChange={e => setHabitName(e.target.value)} required disabled={isDisabled}></input>
-                            {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays}/>)}
-                            <div>
-                                <button className="cancel" onClick={() => { setAdd(false) }}>Cancelar</button>
-                                <button className="save" type="submit" onClick={() => { setAdd(false) }}>Salvar</button>
-                            </div>
-                        </form>
-                        
-                        
-                        
-                                axios.post(`${URL}/habits`, body, config)
-            .then(r => {
-                setRender([...createdHabits])
-                console.log(r.data)})
-            .catch(er => er.response.data)
-
-
-                                            if (h.days.includes(d.id)) {
-                                    <SavedBtn grey={true}>{d.key}</SavedBtn>
-                                } else {
-                                    <SavedBtn grey={false}>{d.key}</SavedBtn>
-                                }})}
-
-*/

@@ -3,7 +3,6 @@ import Header from "../../components/Header"
 import Menu from "../../components/Menu"
 import TodayButton from "../../components/TodayButton"
 import { TitleToday, CheckHabit } from "./styled"
-import check from "../../assets/check.png"
 import "react-circular-progressbar/dist/styles.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useContext, useEffect, useState } from "react"
@@ -13,13 +12,17 @@ import URL from "../../constants/BASE_URL"
 import React from 'react';
 import { Link } from "react-router-dom"
 import dayjs from 'dayjs';
+import CheckHabitt from "../../components/CheckHabit"
 
 export default function Today() {
-    const [today, setToday] = useState([])
-    let now = dayjs();
-    console.log(now.format());
+    var days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    let day = dayjs().date();
+    let month = dayjs().month()
+    let weekday = dayjs().day()
 
-    const { image, token } = useContext(AppContext)
+    const { image, token, checkHabits, setCheckHabits, today, setToday } = useContext(AppContext)
+    const menuBar = checkHabits.length / today.length
+
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -28,9 +31,9 @@ export default function Today() {
 
     useEffect(() => {
         axios.get(`${URL}/habits/today`, config)
-            .then(r => console.log(r.data))
+            .then(r => setToday(r.data))
             .catch(er => er.response.data)
-    }, [])
+    }, [today])
 
     return (
         <>
@@ -40,20 +43,13 @@ export default function Today() {
                     <img src={image} />
                 </Header>
                 <TitleToday>
-                    <h1>Segunda, 17/05</h1>
-                    <p>Nenhum hábito concluído ainda</p>
+                    <h1>{days[weekday]}, {day}/{month}</h1>
+                    {checkHabits.length === 0 ? <p>Nenhum hábito concluído ainda</p> : <p>{menuBar*100}% dos hábitos concluídos</p>}
                 </TitleToday>
-                <CheckHabit>
-                    <h1>Ler 1 capítulo de livro</h1>
-                    <p>Sequência atual: 3 dias</p>
-                    <p>Seu recorde: 5 dias</p>
-                    <div>
-                        <img src={check} />
-                    </div>
-                </CheckHabit>
+                {today.map(t => ( <CheckHabitt key={t.name} t={t} setToday={setToday} setCheckHabits={setCheckHabits} checkHabits={checkHabits}/>))}
                 <Link to="/hoje">
                     <TodayButton left={true}>
-                        <CircularProgressbar value='66' text='Hoje'
+                        <CircularProgressbar value={menuBar * 100} text='Hoje'
                             styles={buildStyles({
                                 textColor: "white",
                                 pathColor: "white",

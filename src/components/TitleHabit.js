@@ -16,6 +16,7 @@ const TitleHabit = styled.div`
     color: #126BA5;
     }
     button{
+        cursor: pointer;
         width: 40px;
         height: 35px;
         background: #52B6FF;

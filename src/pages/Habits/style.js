@@ -61,6 +61,10 @@ export const NewHabit = styled.div`
         background-color: #FFFFFF;
     }
     .save{
+        opacity: ${props => props.loading && '0.7'};
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         top: 130px;
         right: 16px;
@@ -81,7 +85,7 @@ export const NewHabit = styled.div`
 `
 export const SavedHabit = styled.div`
     width: 340px;
-    height: 91px;
+    min-height: 91px;
     background: #FFFFFF;
     border-radius: 5px;
     margin-top: 10px;

@@ -28,6 +28,7 @@ const AlignInputs = styled.div`
         }
     }
     button{
+        opacity: ${props => props.loading &&  '0.7'};
         cursor: pointer;
         width: 303px;
         height: 45px;

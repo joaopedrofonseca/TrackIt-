@@ -6,8 +6,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
 import URL from "../constants/BASE_URL"
+import { ThreeDots } from 'react-loader-spinner'
 
-export default function SignUp() {
+export default function SignUp({loading, setLoading}) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
@@ -16,6 +17,7 @@ export default function SignUp() {
 
     function signUp(e) {
         e.preventDefault()
+        setLoading(true)
         const body = {
             email: email,
             name: name,
@@ -25,9 +27,13 @@ export default function SignUp() {
         axios.post(`${URL}/auth/sign-up`, body)
             .then(r => {
                 console.log(r)
+                setLoading(false)
                 navigate("/")
             })
-            .catch(er => alert(er.response.data.message))
+            .catch(er => {
+                setLoading(false)
+                alert(er.response.data.message)})
+            
     }
 
     return (
@@ -35,13 +41,13 @@ export default function SignUp() {
             <Logo>
                 <img src={logo} />
             </Logo>
-            <AlignInputs>
+            <AlignInputs loading={loading}>
                 <form onSubmit={signUp}>
                     <input placeholder="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required></input>
                     <input placeholder="senha" type="password" value={password} onChange={e => setPassword(e.target.value)} required></input>
                     <input placeholder="nome" type="text" value={name} onChange={e => setName(e.target.value)} required></input>
                     <input placeholder="foto" type="text" value={image} onChange={e => setImage(e.target.value)} required></input>
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit">{loading? <ThreeDots color="white" height='13px' width='51px'></ThreeDots> :'Cadastrar' }</button>
                 </form>
                 <Link to="/">
                     <p>Já tem uma conta? Faça login!</p>

@@ -23,7 +23,7 @@ export const TitleToday = styled.div`
 `
 export const CheckHabit = styled.div`
     width: 340px;
-    height: 94px;
+    min-height: 94px;
     background: #FFFFFF;
     border-radius: 5px;
     margin-left: 18px;
@@ -45,15 +45,22 @@ export const CheckHabit = styled.div`
         color: #666666;
     }
     div{
+        cursor: pointer;
         position: absolute;
         top: 13px;
         right: 13px;
         width: 69px;
         height: 69px;
-        background: #EBEBEB; //#8FC549
+        background: ${props => !props.done ? '#EBEBEB' : '#8FC549'};
         border-radius: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .current{
+        color: ${props => props.done ? '#8FC549' : '#666666'}
+    }
+    .record{
+        color : ${props => props.record ? '#8FC549' : '#666666'}
     }
 `

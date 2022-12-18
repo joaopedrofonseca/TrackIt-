@@ -9,14 +9,16 @@ import { useState } from "react";
 
 export default function App() {
   const [createdHabits, setCreatedHabits] = useState([])
+  const [loading, setLoading] = useState(false)
+
 
   return (
     <AppProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/cadastro" element={<SignUp />} />
-          <Route path="/habitos" element={<Habits createdHabits={createdHabits} setCreatedHabits={setCreatedHabits}/>} />
+          <Route path="/" element={<LoginPage loading={loading} setLoading={setLoading}/>} />
+          <Route path="/cadastro" element={<SignUp loading={loading} setLoading={setLoading}/>} />
+          <Route path="/habitos" element={<Habits createdHabits={createdHabits} setCreatedHabits={setCreatedHabits} loading={loading} setLoading={setLoading}/>} />
           <Route path="/hoje" element={<Today createdHabits={createdHabits}/>} />
           <Route path="/historico" element={<History />} />
         </Routes>
