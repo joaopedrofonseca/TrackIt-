@@ -87,7 +87,7 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
                 {add === true && <NewHabit data-test="habit-create-container" loading={loading}>
                     <form onSubmit={addHabit}>
                         <input data-test="habit-name-input" placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)} disabled={isDisableH}></input>
-                        <button data-test="habit-create-save-btn" className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px' disabled></ThreeDots> : 'Salvar'}</button>
+                        <button data-test="habit-create-save-btn" className="save" type="submit" disabled={loading}>{loading ? <ThreeDots color="white" height='10px' width='43px' ></ThreeDots> : 'Salvar'}</button>
                     </form>
                     <div>
                         {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} isDisableH={isDisableH}/>)}
@@ -102,7 +102,7 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
                             <img data-test="habit-delete-btn" onClick={() => removeHabit(h.id)} src={trash} />
                         </div>
                         <AlignWeekdays>
-                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn data-test="habit-day" key={d.id} grey={true} disabled>{d.key}</SavedBtn> : <SavedBtn key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
+                            {weekdays.map(d => (h.days.includes(d.id) ? <SavedBtn data-test="habit-day" key={d.id} grey={true} disabled>{d.key}</SavedBtn> : <SavedBtn data-test="habit-day" key={d.id} grey={false} disabled>{d.key}</SavedBtn>))}
                         </AlignWeekdays>
                     </SavedHabit>
                 ))}
