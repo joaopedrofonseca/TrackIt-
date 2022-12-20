@@ -3,14 +3,25 @@ import styled from "styled-components"
 
 export default function WeekdayBtn({ d, setSelectedDays, selectedDays, isDisableH }) {
     const [clicked, setClicked] = useState(false)
+
+    function btnClick(day) {
+        if (!selectedDays.includes(day.id)) {
+            setClicked(true)
+            setSelectedDays([...selectedDays, day.id])
+        } else {
+            setClicked(false)
+            let filteredDays = selectedDays.filter(f => !(f === day.id))
+            setSelectedDays([...filteredDays])
+        }
+    }
+
+    console.log(selectedDays)
+
     return (
         <Button
             disabled={isDisableH}
             data-test="habit-day"
-            onClick={() => {
-                setClicked(true)
-                setSelectedDays([...selectedDays, d.id])
-            }}
+            onClick={() => btnClick(d)}
             clicked={clicked}
         > {d.key}</Button >
     )
