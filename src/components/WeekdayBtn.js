@@ -1,10 +1,11 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function WeekdayBtn({ d, setSelectedDays, selectedDays }) {
+export default function WeekdayBtn({ d, setSelectedDays, selectedDays, isDisableH }) {
     const [clicked, setClicked] = useState(false)
     return (
         <Button
+            disabled={isDisableH}
             data-test="habit-day"
             onClick={() => {
                 setClicked(true)

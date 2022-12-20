@@ -17,7 +17,7 @@ import CheckHabitt from "../../components/CheckHabit"
 export default function Today() {
     var days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     let day = dayjs().date();
-    let month = dayjs().month()
+    let month = dayjs().month() + 1
     let weekday = dayjs().day()
 
     const { image, token, checkHabits, setCheckHabits, today, setToday } = useContext(AppContext)

@@ -87,12 +87,12 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
                 {add === true && <NewHabit data-test="habit-create-container" loading={loading}>
                     <form onSubmit={addHabit}>
                         <input data-test="habit-name-input" placeholder="nome do hábito" value={habitName} type="text" onChange={e => setHabitName(e.target.value)} disabled={isDisableH}></input>
-                        <button data-test="habit-create-save-btn" className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px'></ThreeDots> : 'Salvar'}</button>
+                        <button data-test="habit-create-save-btn" className="save" type="submit">{loading ? <ThreeDots color="white" height='10px' width='43px' disabled></ThreeDots> : 'Salvar'}</button>
                     </form>
                     <div>
-                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} />)}
+                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} isDisableH={isDisableH}/>)}
                     </div>
-                    <button  data-test="habit-create-cancel-btn" className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
+                    <button  data-test="habit-create-cancel-btn" disabled={isDisableH} className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
 
                 </NewHabit>}
                 {createdHabits.map(h => (

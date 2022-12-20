@@ -45,8 +45,8 @@ export default function LoginPage({ loading, setLoading }) {
             </Logo>
             <AlignInputs loading={loading}>
                 <form onSubmit={login}>
-                    <input data-test="email-input" placeholder="email" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} required></input>
-                    <input data-test="password-input" placeholder="senha" type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} required></input>
+                    <input data-test="email-input" placeholder="email" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} disabled ={loading} required></input>
+                    <input data-test="password-input" placeholder="senha" type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} disabled={loading} required></input>
                     <button data-test="login-btn" type="submit">{loading ? <ThreeDots color="white" height='13px' width='51px'></ThreeDots> : 'Entrar'}</button>
                 </form>
                 <Link to="/cadastro" data-test="signup-link">
