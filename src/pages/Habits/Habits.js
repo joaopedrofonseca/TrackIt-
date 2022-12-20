@@ -90,9 +90,9 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
                         <button data-test="habit-create-save-btn" className="save" type="submit" disabled={loading}>{loading ? <ThreeDots color="white" height='10px' width='43px' ></ThreeDots> : 'Salvar'}</button>
                     </form>
                     <div>
-                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} isDisableH={isDisableH}/>)}
+                        {weekdays.map(d => <WeekdayBtn key={d.id} d={d} selectedDays={selectedDays} setSelectedDays={setSelectedDays} isDisableH={isDisableH} />)}
                     </div>
-                    <button  data-test="habit-create-cancel-btn" disabled={isDisableH} className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
+                    <button data-test="habit-create-cancel-btn" disabled={isDisableH} className="cancel" onClick={() => setAdd(false)}>Cancelar</button>
 
                 </NewHabit>}
                 {createdHabits.map(h => (
@@ -113,21 +113,22 @@ export default function Habits({ createdHabits, setCreatedHabits, loading, setLo
                 <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
                     <h1>Hábitos</h1>
                 </Link>
+                <Link to="/hoje" data-test="today">
+                    <TodayButton left='42px'>
+                        <CircularProgressbar value={menuBar * 100} text='Hoje'
+                            styles={buildStyles({
+                                textColor: "white",
+                                pathColor: "white",
+                                trailColor: "#52B6FF"
+                            })} />
+
+                    </TodayButton>
+                </Link>
                 <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                     <h1>Histórico</h1>
                 </Link>
             </Menu>
-            <Link to="/hoje" data-test="today">
-                <TodayButton left='42px'>
-                    <CircularProgressbar value={menuBar * 100} text='Hoje'
-                        styles={buildStyles({
-                            textColor: "white",
-                            pathColor: "white",
-                            trailColor: "#52B6FF"
-                        })} />
 
-                </TodayButton>
-            </Link>
         </PhoneScreen>
 
     )

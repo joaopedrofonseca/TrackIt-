@@ -24,7 +24,12 @@ export default function History() {
                 <h1>Histórico</h1>
             </TitleHabit>
             <Phrase>Em breve você poderá ver o histórico dos seus hábitos aqui!</Phrase>
-            <Link to="/hoje" data-test="today">
+            
+            <Menu data-test="menu">
+                <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
+                    <h1>Hábitos</h1>
+                </Link>
+                <Link to="/hoje" data-test="today">
                 <TodayButton left={true}>
                     <CircularProgressbar value={menuBar * 100} text='Hoje'
                         styles={buildStyles({
@@ -35,10 +40,6 @@ export default function History() {
 
                 </TodayButton>
             </Link>
-            <Menu data-test="menu">
-                <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
-                    <h1>Hábitos</h1>
-                </Link>
                 <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                     <h1>Histórico</h1>
                 </Link>

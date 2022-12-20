@@ -47,20 +47,21 @@ export default function Today() {
                     {checkHabits.length === 0 ? <p data-test="today-counter">Nenhum hábito concluído ainda</p> : <p data-test="today-counter">{menuBar * 100}% dos hábitos concluídos</p>}
                 </TitleToday>
                 {today.map(t => (<CheckHabitt key={t.name} t={t} setToday={setToday} setCheckHabits={setCheckHabits} checkHabits={checkHabits} />))}
-                <Link to="/hoje" data-test="today">
-                    <TodayButton left={true}>
-                        <CircularProgressbar value={menuBar * 100} text='Hoje'
-                            styles={buildStyles({
-                                textColor: "white",
-                                pathColor: "white",
-                                trailColor: "#52B6FF"
-                            })} />
 
-                    </TodayButton>
-                </Link>
                 <Menu data-test="menu">
                     <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
                         <h1>Hábitos</h1>
+                    </Link>
+                    <Link to="/hoje" data-test="today">
+                        <TodayButton left={true}>
+                            <CircularProgressbar value={menuBar * 100} text='Hoje'
+                                styles={buildStyles({
+                                    textColor: "white",
+                                    pathColor: "white",
+                                    trailColor: "#52B6FF"
+                                })} />
+
+                        </TodayButton>
                     </Link>
                     <Link to="/historico" data-test="history-link" style={{ textDecoration: 'none' }}>
                         <h1>Histórico</h1>
