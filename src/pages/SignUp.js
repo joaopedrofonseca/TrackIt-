@@ -47,7 +47,7 @@ export default function SignUp({loading, setLoading}) {
                     <input data-test="password-input" placeholder="senha" type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={loading} required></input>
                     <input data-test="user-name-input" placeholder="nome" type="text" value={name} onChange={e => setName(e.target.value)} disabled={loading} required></input>
                     <input data-test="user-image-input" placeholder="foto" type="text" value={image} onChange={e => setImage(e.target.value)} disabled={loading} required></input>
-                    <button data-test="signup-btn" type="submit">{loading? <ThreeDots color="white" height='13px' width='51px' disabled></ThreeDots> :'Cadastrar' }</button>
+                    <button data-test="signup-btn" type="submit" disabled={loading}>{loading? <ThreeDots color="white" height='13px' width='51px' ></ThreeDots> :'Cadastrar' }</button>
                 </form>
                 <Link to="/" data-test="login-link">
                     <p>Já tem uma conta? Faça login!</p>
