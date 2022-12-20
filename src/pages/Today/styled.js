@@ -20,6 +20,7 @@ export const TitleToday = styled.div`
         font-size: 17.976px;
         line-height: 22px;
         color: #BABABA;
+        color: ${props => props.color}
     }
 `
 export const CheckHabit = styled.div`

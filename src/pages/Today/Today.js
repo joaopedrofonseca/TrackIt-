@@ -19,6 +19,8 @@ export default function Today() {
     let day = dayjs().date();
     let month = dayjs().month() + 1
     let weekday = dayjs().day()
+    const [clicks, setClicks] = useState(0)
+
 
     const { image, token, checkHabits, setCheckHabits, today, setToday } = useContext(AppContext)
     const menuBar = checkHabits.length / today.length
@@ -33,7 +35,8 @@ export default function Today() {
         axios.get(`${URL}/habits/today`, config)
             .then(r => setToday(r.data))
             .catch(er => er.response.data)
-    }, [today])
+    }, [today, clicks])
+
 
     return (
         <>
@@ -42,11 +45,11 @@ export default function Today() {
                     <h1>TrackIt</h1>
                     <img src={image} />
                 </Header>
-                <TitleToday checkHabits={checkHabits}>
+                <TitleToday checkHabits={checkHabits} color ={menuBar !== 0 && "#8FC549"}>
                     <h1 data-test="today">{days[weekday]}, {day}/{month}</h1>
-                    {checkHabits.length === 0 ? <p data-test="today-counter">Nenhum hábito concluído ainda</p> : <p data-test="today-counter">{menuBar * 100}% dos hábitos concluídos</p>}
+                    {checkHabits.length === 0 ? <p data-test="today-counter">Nenhum hábito concluído ainda</p> : <p data-test="today-counter" >{menuBar * 100}% dos hábitos concluídos</p>}
                 </TitleToday>
-                {today.map(t => (<CheckHabitt key={t.name} t={t} setToday={setToday} setCheckHabits={setCheckHabits} checkHabits={checkHabits} />))}
+                {today.map(t => (<CheckHabitt key={t.name} setClicks={setClicks} clicks={clicks} t={t} setCheckHabits={setCheckHabits} checkHabits={checkHabits} />))}
 
                 <Menu data-test="menu">
                     <Link to="/habitos" data-test="habit-link" style={{ textDecoration: 'none' }}>
